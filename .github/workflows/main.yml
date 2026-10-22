@@ -28,7 +28,7 @@ jobs:
       - name: Prepare NEXUS keyboard
         run: |
           mkdir -p qmk_firmware/keyboards/nexus/keymaps/default
-          cp config.h rules.mk qmk_firmware/keyboards/nexus/
+          cp config.h rules.mk mcuconf.h qmk_firmware/keyboards/nexus/
           cp info.json qmk_firmware/keyboards/nexus/keyboard.json
           cp keymap.c qmk_firmware/keyboards/nexus/keymaps/default/keymap.c
           echo "NEXUS keyboard files:"
