@@ -2,10 +2,7 @@
 
 #define DIODE_DIRECTION COL2ROW
 
-/* EC11 rotary encoder signal pins: XIAO D9=GP4, D10=GP3 */
-#define ENCODERS_PAD_A { GP4 }
-#define ENCODERS_PAD_B { GP3 }
-#define ENCODER_RESOLUTION 4
+
 
 /* 0.91-inch 128x32 SSD1306 OLED: XIAO D4=GP6 (SDA), D5=GP7 (SCL) */
 #define I2C_DRIVER I2CD0
