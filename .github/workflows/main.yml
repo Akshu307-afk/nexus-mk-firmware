@@ -15,21 +15,24 @@ jobs:
     container: ghcr.io/qmk/qmk_cli
 
     steps:
-      - name: Checkout NEXUS
+      - name: Checkout NEXUS source
         uses: actions/checkout@v4
 
-      - name: Checkout QMK
+      - name: Checkout QMK firmware
         uses: actions/checkout@v4
         with:
           repository: qmk/qmk_firmware
           path: qmk_firmware
           submodules: recursive
 
-      - name: Prepare keyboard files
+      - name: Prepare NEXUS keyboard
         run: |
           mkdir -p qmk_firmware/keyboards/nexus/keymaps/default
-          cp config.h info.json rules.mk qmk_firmware/keyboards/nexus/
+          cp config.h rules.mk qmk_firmware/keyboards/nexus/
+          cp info.json qmk_firmware/keyboards/nexus/keyboard.json
           cp keymap.c qmk_firmware/keyboards/nexus/keymaps/default/keymap.c
+          echo "NEXUS keyboard files:"
+          find qmk_firmware/keyboards/nexus -maxdepth 3 -type f
 
       - name: Compile UF2
         working-directory: qmk_firmware
