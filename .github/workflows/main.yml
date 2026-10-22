@@ -1,0 +1,43 @@
+
+name: Build NEXUS UF2
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ghcr.io/qmk/qmk_cli
+
+    steps:
+      - name: Checkout NEXUS
+        uses: actions/checkout@v4
+
+      - name: Checkout QMK
+        uses: actions/checkout@v4
+        with:
+          repository: qmk/qmk_firmware
+          path: qmk_firmware
+          submodules: recursive
+
+      - name: Prepare keyboard files
+        run: |
+          mkdir -p qmk_firmware/keyboards/nexus/keymaps/default
+          cp config.h info.json rules.mk qmk_firmware/keyboards/nexus/
+          cp keymap.c qmk_firmware/keyboards/nexus/keymaps/default/keymap.c
+
+      - name: Compile UF2
+        working-directory: qmk_firmware
+        run: qmk compile -kb nexus -km default
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: NEXUS-UF2
+          path: qmk_firmware/*.uf2
+          if-no-files-found: error
